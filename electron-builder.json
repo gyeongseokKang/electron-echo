@@ -4,7 +4,7 @@
     "output": "build/app"
   },
   "files": ["build/electron", "build/react"],
-  "extraResources": ["build/electron/preload.cjs", "src/assets/**"],
+  "extraResources": ["build/electron/preload.cjs", "shared/assets/**"],
   "icon": "./desktopIcon.png",
 
   "mac": {

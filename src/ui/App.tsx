@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
-import { useStatistics } from './useStatistics';
-import { Chart } from './Chart';
+import { useEffect, useMemo, useState } from "react";
+import "./App.css";
+import reactLogo from "./assets/react.svg";
+import { Chart } from "./Chart";
+import { useStatistics } from "./useStatistics";
 
 function App() {
   const staticData = useStaticData();
   const statistics = useStatistics(10);
-  const [activeView, setActiveView] = useState<View>('CPU');
+  const [activeView, setActiveView] = useState<View>("CPU");
   const cpuUsages = useMemo(
     () => statistics.map((stat) => stat.cpuUsage),
     [statistics]
@@ -22,11 +22,11 @@ function App() {
   );
   const activeUsages = useMemo(() => {
     switch (activeView) {
-      case 'CPU':
+      case "CPU":
         return cpuUsages;
-      case 'RAM':
+      case "RAM":
         return ramUsages;
-      case 'STORAGE':
+      case "STORAGE":
         return storageUsages;
     }
   }, [activeView, cpuUsages, ramUsages, storageUsages]);
@@ -41,24 +41,24 @@ function App() {
       <div className="main">
         <div>
           <SelectOption
-            onClick={() => setActiveView('CPU')}
+            onClick={() => setActiveView("CPU")}
             title="CPU"
             view="CPU"
-            subTitle={staticData?.cpuModel ?? ''}
+            subTitle={staticData?.cpuModel ?? ""}
             data={cpuUsages}
           />
           <SelectOption
-            onClick={() => setActiveView('RAM')}
+            onClick={() => setActiveView("RAM")}
             title="RAM"
             view="RAM"
-            subTitle={(staticData?.totalMemoryGB.toString() ?? '') + ' GB'}
+            subTitle={(staticData?.totalMemoryGB.toString() ?? "") + " GB"}
             data={ramUsages}
           />
           <SelectOption
-            onClick={() => setActiveView('STORAGE')}
+            onClick={() => setActiveView("STORAGE")}
             title="STORAGE"
             view="STORAGE"
-            subTitle={(staticData?.totalStorage.toString() ?? '') + ' GB'}
+            subTitle={(staticData?.totalStorage.toString() ?? "") + " GB"}
             data={storageUsages}
           />
         </div>
@@ -97,17 +97,18 @@ function SelectOption(props: {
 function Header() {
   return (
     <header>
+      <img src={reactLogo} alt="react logo" />
       <button
         id="close"
-        onClick={() => window.electron.sendFrameAction('CLOSE')}
+        onClick={() => window.electron.sendFrameAction("CLOSE")}
       />
       <button
         id="minimize"
-        onClick={() => window.electron.sendFrameAction('MINIMIZE')}
+        onClick={() => window.electron.sendFrameAction("MINIMIZE")}
       />
       <button
         id="maximize"
-        onClick={() => window.electron.sendFrameAction('MAXIMIZE')}
+        onClick={() => window.electron.sendFrameAction("MAXIMIZE")}
       />
     </header>
   );
