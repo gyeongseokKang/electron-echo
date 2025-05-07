@@ -10,9 +10,9 @@ type StaticData = {
   totalMemoryGB: number;
 };
 
-type View = 'CPU' | 'RAM' | 'STORAGE';
+type View = "CPU" | "RAM" | "STORAGE";
 
-type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
+type FrameWindowAction = "CLOSE" | "MAXIMIZE" | "MINIMIZE";
 
 type EventPayloadMapping = {
   statistics: Statistics;
