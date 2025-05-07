@@ -1,9 +1,11 @@
 import { app, BrowserWindow } from "electron";
-import { createMenu } from "./menu.js";
-import { getPreloadPath, getUIPath } from "./pathResolver.js";
+import { createApplicationTray } from "./features/tray/createApplicationTray.js";
+
+import { createApplicationMenu } from "./features/menu/createApplicationMenu.js";
 import { getStaticData, pollResources } from "./resourceManager.js";
-import { createTray } from "./tray.js";
-import { ipcMainHandle, ipcMainOn, isDev } from "./util.js";
+import { isDev } from "./utils/dev-utils.js";
+import { ipcMainHandle, ipcMainOn } from "./utils/ipc-utils.js";
+import { getPreloadPath, getUIPath } from "./utils/path-utils.js";
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({
@@ -39,9 +41,10 @@ app.on("ready", () => {
     }
   });
 
-  createTray(mainWindow);
   handleCloseEvents(mainWindow);
-  createMenu(mainWindow);
+
+  createApplicationTray(mainWindow);
+  createApplicationMenu(mainWindow);
 });
 
 function handleCloseEvents(mainWindow: BrowserWindow) {

@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu } from "electron";
 import { expect, Mock, test, vi } from "vitest";
-import { createTray } from "./tray.js";
+import { createApplicationTray } from "./features/tray/createApplicationTray.js";
 
 vi.mock("electron", () => {
   return {
@@ -25,7 +25,7 @@ const mainWindow = {
 } satisfies Partial<BrowserWindow> as any as BrowserWindow;
 
 test("", () => {
-  createTray(mainWindow);
+  createApplicationTray(mainWindow);
 
   const calls = (Menu.buildFromTemplate as any as Mock).mock.calls;
   const args = calls[0] as Parameters<typeof Menu.buildFromTemplate>;

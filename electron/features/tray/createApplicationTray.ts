@@ -1,8 +1,8 @@
 import { BrowserWindow, Menu, Tray, app } from "electron";
 import path from "path";
-import { getAssetPath } from "./pathResolver.js";
+import { getAssetPath } from "../../utils/path-utils.js";
 
-export function createTray(mainWindow: BrowserWindow) {
+export function createApplicationTray(mainWindow: BrowserWindow) {
   const tray = new Tray(
     path.join(
       getAssetPath(),

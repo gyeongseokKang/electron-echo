@@ -1,10 +1,8 @@
 import { ipcMain, WebContents, WebFrameMain } from "electron";
 import { pathToFileURL } from "url";
-import { getUIPath } from "./pathResolver.js";
-
-export function isDev(): boolean {
-  return process.env.NODE_ENV === "development";
-}
+import { isDev } from "../dev-utils.js";
+import { getUIPath } from "../path-utils.js";
+import { EventPayloadMapping } from "./types.js";
 
 export function ipcMainHandle<Key extends keyof EventPayloadMapping>(
   key: Key,

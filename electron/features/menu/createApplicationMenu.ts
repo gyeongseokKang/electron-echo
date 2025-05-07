@@ -1,7 +1,8 @@
 import { BrowserWindow, Menu, app } from "electron";
-import { ipcWebContentsSend, isDev } from "./util.js";
+import { isDev } from "../../utils/dev-utils.js";
+import { ipcWebContentsSend } from "../../utils/ipc-utils.js";
 
-export function createMenu(mainWindow: BrowserWindow) {
+export function createApplicationMenu(mainWindow: BrowserWindow) {
   Menu.setApplicationMenu(
     Menu.buildFromTemplate([
       {
