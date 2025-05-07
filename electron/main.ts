@@ -4,7 +4,8 @@ import { createApplicationTray } from "./features/tray/createApplicationTray.js"
 import { createApplicationMenu } from "./features/menu/createApplicationMenu.js";
 import { getStaticData, pollResources } from "./resourceManager.js";
 import { isDev } from "./utils/dev-utils.js";
-import { ipcMainHandle, ipcMainOn } from "./utils/ipc-utils.js";
+
+import { ipcMainHandle, ipcMainOn } from "./utils/ipc/main.js";
 import { getPreloadPath, getUIPath } from "./utils/path-utils.js";
 
 app.on("ready", () => {
