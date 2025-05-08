@@ -14,7 +14,10 @@ app.on("ready", () => {
       preload: getPreloadPath(),
     },
     // disables default system frame (dont do this if you want a proper working menu bar)
-    frame: false,
+    frame: true,
+    backgroundColor: "white",
+    width: 1200,
+    height: 800,
   });
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");

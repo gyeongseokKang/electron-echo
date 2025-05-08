@@ -1,30 +1,22 @@
-import {
-  createRootRoute,
-  Link,
-  Outlet,
-  useRouter,
-} from "@tanstack/react-router";
+import { createRootRoute, Outlet, useRouter } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
 
 export const Route = createRootRoute({
   component: () => (
-    <>
-      <div className="p-2 flex gap-2">
+    <div className="w-full h-screen">
+      {/* <div className="p-2 flex gap-2 ">
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>
         <Link to="/about" className="[&.active]:font-bold">
           About
         </Link>
-        <Link to="/test2" className="[&.active]:font-bold">
-          Test
-        </Link>
       </div>
-      <hr />
+      <hr /> */}
       <Outlet />
       <TanStackRouterDevtools />
-    </>
+    </div>
   ),
   notFoundComponent: () => <NotFound />,
 });
