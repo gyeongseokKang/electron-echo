@@ -1,3 +1,5 @@
+import { ipcRenderer } from "electron";
+
 const electron = require("electron");
 
 electron.contextBridge.exposeInMainWorld("electron", {
@@ -11,6 +13,19 @@ electron.contextBridge.exposeInMainWorld("electron", {
     }),
   getStaticData: () => ipcInvoke("getStaticData"),
   sendFrameAction: (payload) => ipcSend("sendFrameAction", payload),
+  network: {
+    startNetworkMonitoring: () =>
+      ipcRenderer.invoke("start-network-monitoring"),
+    stopNetworkMonitoring: () => ipcRenderer.invoke("stop-network-monitoring"),
+    onNetworkStatusChanged: (callback: (networkInfo: any) => void) => {
+      ipcRenderer.on("network-status-changed", (_, networkInfo) =>
+        callback(networkInfo)
+      );
+      return () => {
+        ipcRenderer.removeAllListeners("network-status-changed");
+      };
+    },
+  },
 } satisfies Window["electron"]);
 
 function ipcInvoke<Key extends keyof EventPayloadMapping>(

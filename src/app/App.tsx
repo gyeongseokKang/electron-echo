@@ -7,6 +7,7 @@ import { useStatistics } from "./useStatistics";
 function App() {
   const staticData = useStaticData();
   const statistics = useStatistics(10);
+  const [networkInfo, setNetworkInfo] = useState<NetworkInfo | null>(null);
   const [activeView, setActiveView] = useState<View>("CPU");
   const cpuUsages = useMemo(
     () => statistics.map((stat) => stat.cpuUsage),
@@ -35,8 +36,22 @@ function App() {
     return window.electron.subscribeChangeView((view) => setActiveView(view));
   }, []);
 
+  useEffect(() => {
+    window.electron.network.startNetworkMonitoring();
+    window.electron.network.onNetworkStatusChanged((networkInfo) => {
+      setNetworkInfo(networkInfo);
+    });
+    return () => {
+      window.electron.network.stopNetworkMonitoring();
+    };
+  }, []);
+
   return (
     <div className="App">
+      <div className="networkInfo">
+        {networkInfo?.isCompanyNetwork ? "Company Network" : "Public Network"}
+        {networkInfo?.ssid}
+      </div>
       <Header />
       <div className="main">
         <div>

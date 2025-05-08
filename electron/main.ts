@@ -1,10 +1,10 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { createApplicationTray } from "./features/tray/createApplicationTray.js";
 
 import { createApplicationMenu } from "./features/menu/createApplicationMenu.js";
+import { NetworkManager } from "./features/network/networkManager.js";
 import { getStaticData, pollResources } from "./resourceManager.js";
 import { isDev } from "./utils/dev-utils.js";
-
 import { ipcMainHandle, ipcMainOn } from "./utils/ipc/main.js";
 import { getPreloadPath, getUIPath } from "./utils/path-utils.js";
 
@@ -46,6 +46,8 @@ app.on("ready", () => {
 
   createApplicationTray(mainWindow);
   createApplicationMenu(mainWindow);
+
+  setupIpcHandlers(mainWindow);
 });
 
 function handleCloseEvents(mainWindow: BrowserWindow) {
@@ -68,5 +70,46 @@ function handleCloseEvents(mainWindow: BrowserWindow) {
 
   mainWindow.on("show", () => {
     willClose = false;
+  });
+}
+
+function setupIpcHandlers(mainWindow: BrowserWindow) {
+  const networkManager = NetworkManager.getInstance();
+
+  // 네트워크 상태 변경 이벤트를 렌더러 프로세스로 전달
+  networkManager.on("networkChanged", (networkInfo: any) => {
+    mainWindow?.webContents.send("network-status-changed", networkInfo);
+  });
+
+  ipcMain.handle("check-company-network", async () => {
+    try {
+      return await networkManager.checkCompanyNetwork();
+    } catch (error) {
+      console.error("Error checking company network:", error);
+      return {
+        isCompanyNetwork: false,
+        ssid: undefined,
+      };
+    }
+  });
+
+  ipcMain.handle("start-network-monitoring", async () => {
+    try {
+      networkManager.startNetworkMonitoring();
+      return true;
+    } catch (error) {
+      console.error("Error starting network monitoring:", error);
+      return false;
+    }
+  });
+
+  ipcMain.handle("stop-network-monitoring", async () => {
+    try {
+      networkManager.stopNetworkMonitoring();
+      return true;
+    } catch (error) {
+      console.error("Error stopping network monitoring:", error);
+      return false;
+    }
   });
 }

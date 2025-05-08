@@ -21,6 +21,10 @@ type EventPayloadMapping = {
   sendFrameAction: FrameWindowAction;
 };
 
+interface NetworkInfo {
+  isCompanyNetwork: boolean;
+  ssid?: string;
+}
 type UnsubscribeFunction = () => void;
 
 interface Window {
@@ -33,5 +37,12 @@ interface Window {
       callback: (view: View) => void
     ) => UnsubscribeFunction;
     sendFrameAction: (payload: FrameWindowAction) => void;
+    network: {
+      startNetworkMonitoring: (intervalMinutes?: number) => Promise<boolean>;
+      stopNetworkMonitoring: () => Promise<boolean>;
+      onNetworkStatusChanged: (
+        callback: (networkInfo: NetworkInfo) => void
+      ) => UnsubscribeFunction;
+    };
   };
 }
