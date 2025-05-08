@@ -1,8 +1,12 @@
 import { Button } from "@/shared/ui/button";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 
-function App() {
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
   const [networkInfo, setNetworkInfo] = useState<NetworkInfo | null>(null);
 
   useEffect(() => {
@@ -16,7 +20,7 @@ function App() {
   }, []);
 
   return (
-    <div className="p-20">
+    <div className="p-2">
       <div className="bg-blue-200">
         <div className="bg-primary text-primary-foreground shadow-xs hover:bg-primary/90">
           asdf
@@ -33,29 +37,6 @@ function App() {
         {networkInfo?.isCompanyNetwork ? "Company Network" : "Public Network"}
         {networkInfo?.ssid}
       </div>
-      <Header />
     </div>
   );
 }
-
-function Header() {
-  return (
-    <header>
-      <img src={reactLogo} alt="react logo" />
-      <button
-        id="close"
-        onClick={() => window.electron.sendFrameAction("CLOSE")}
-      />
-      <button
-        id="minimize"
-        onClick={() => window.electron.sendFrameAction("MINIMIZE")}
-      />
-      <button
-        id="maximize"
-        onClick={() => window.electron.sendFrameAction("MAXIMIZE")}
-      />
-    </header>
-  );
-}
-
-export default App;
