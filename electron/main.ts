@@ -18,6 +18,9 @@ app.on("ready", () => {
   });
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5123");
+
+    // 콘솔창도 함께
+    mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(getUIPath());
   }

@@ -1,5 +1,4 @@
 import { BrowserWindow, Menu, app } from "electron";
-import { isDev } from "../../utils/dev-utils.js";
 import { ipcWebContentsSend } from "../../utils/ipc/main.js";
 
 export function createApplicationMenu(mainWindow: BrowserWindow) {
@@ -16,7 +15,6 @@ export function createApplicationMenu(mainWindow: BrowserWindow) {
           {
             label: "DevTools",
             click: () => mainWindow.webContents.openDevTools(),
-            visible: isDev(),
           },
         ],
       },
