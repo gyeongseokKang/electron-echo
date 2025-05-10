@@ -12,8 +12,10 @@ app.on("ready", () => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: getPreloadPath(),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false,
     },
-    // disables default system frame (dont do this if you want a proper working menu bar)
     frame: true,
     backgroundColor: "white",
     width: 1200,

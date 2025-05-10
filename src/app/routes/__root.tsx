@@ -1,3 +1,4 @@
+import { Toaster } from "@/shared/ui/sonner";
 import { createRootRoute, Outlet, useRouter } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
@@ -16,6 +17,7 @@ export const Route = createRootRoute({
       <hr /> */}
       <Outlet />
       <TanStackRouterDevtools />
+      <Toaster />
     </div>
   ),
   notFoundComponent: () => <NotFound />,

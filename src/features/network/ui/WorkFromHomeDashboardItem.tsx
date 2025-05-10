@@ -15,7 +15,7 @@ const getStatus = (networkInfo: NetworkInfo | null): Status => {
   return networkInfo.isCompanyNetwork ? "OFFICE" : "HOME";
 };
 
-export const CheckWorkFromCompany = () => {
+export const WorkFromHomeDashboardItem = () => {
   const [networkInfo, setNetworkInfo] = useState<NetworkInfo | null>(null);
   const isOnline = useNetworkState().online;
 
@@ -65,4 +65,4 @@ export const CheckWorkFromCompany = () => {
   );
 };
 
-export default CheckWorkFromCompany;
+export default WorkFromHomeDashboardItem;
