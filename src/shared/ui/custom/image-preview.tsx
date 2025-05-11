@@ -22,7 +22,7 @@ const ImagePreview = ({ image, className }: ImagePreviewProps) => {
   return (
     <div className={cn("py-2", className)}>
       <img
-        className="aspect-video w-60 rounded-md"
+        className="aspect-video w-full rounded-md cursor-zoom-in"
         src={imgSrc}
         alt={image.name}
         onClick={() => {

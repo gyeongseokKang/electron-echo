@@ -1,9 +1,11 @@
+import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 type ExpenseImage = {
   name: string;
   url?: string;
+  id: string;
   file?: File;
 };
 
@@ -13,7 +15,7 @@ type State = {
 
 type Actions = {
   addImages: (files: File[]) => void;
-  removeImage: (name: string) => void;
+  removeImage: (id: string) => void;
   clearImages: () => void;
   reset: () => void;
 };
@@ -27,7 +29,9 @@ const useExpenseImagesStore = create(
     ...initialState,
     addImages: (files) =>
       set((state) => {
-        state.images.push(...files.map((file) => ({ name: file.name, file })));
+        state.images.push(
+          ...files.map((file) => ({ name: file.name, file, id: uuidv4() }))
+        );
 
         // 중복 제거
         state.images = state.images.filter(
@@ -35,10 +39,10 @@ const useExpenseImagesStore = create(
             index === self.findIndex((t) => t.name === img.name)
         );
       }),
-    removeImage: (name) =>
+    removeImage: (id) =>
       set((state) => {
         state.images = state.images.filter(
-          (img: ExpenseImage) => img.name !== name
+          (img: ExpenseImage) => img.id !== id
         );
       }),
     clearImages: () =>
